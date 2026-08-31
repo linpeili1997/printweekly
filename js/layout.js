@@ -19,12 +19,12 @@
 
   /* [显示文字, 链接] */
   var NAV = [
-    ['Weekly Planner', 'index.html'],
-    ['Undated', 'undated-weekly-planner.html'],
-    ['Vertical', 'vertical-weekly-planner.html'],
-    ['Habit Tracker', 'weekly-habit-tracker-printable.html'],
-    ['Blog', 'blog/index.html'],
-    ['About', 'about.html']
+    ['Weekly Planner', './'],
+    ['Undated', 'undated-weekly-planner'],
+    ['Vertical', 'vertical-weekly-planner'],
+    ['Habit Tracker', 'weekly-habit-tracker-printable'],
+    ['Blog', 'blog/'],
+    ['About', 'about']
   ];
 
   function navLinks(items) {
@@ -32,7 +32,7 @@
       /* 用临时 <a> 把相对链接解析成绝对路径，再和当前页归一化比较 */
       var a = document.createElement('a');
       a.href = base + it[1];
-      var isActive = normPath(a.pathname) === curPath || (inBlog && it[1] === 'blog/index.html');
+      var isActive = normPath(a.pathname) === curPath || (inBlog && it[1] === 'blog/');
       return '<a href="' + base + it[1] + '"' + (isActive ? ' aria-current="page"' : '') + '>' + it[0] + '</a>';
     }).join('');
   }
@@ -41,7 +41,7 @@
   if (header) {
     header.innerHTML =
       '<header class="site-header"><div class="container">' +
-      '<a class="brand" href="' + base + 'index.html"><span class="dot"></span>Print<strong>Weekly</strong></a>' +
+      '<a class="brand" href="' + base + './"><span class="dot"></span>Print<strong>Weekly</strong></a>' +
       '<nav class="site-nav">' + navLinks(NAV) + '</nav>' +
       '</div></header>';
   }
@@ -55,17 +55,17 @@
       '<div><div class="foot-brand">Print<strong>Weekly</strong></div>' +
       '<p class="foot-desc">Free printable weekly planners and habit trackers. Customize online, print at home, plan your week on paper.</p></div>' +
       '<div class="foot-col"><h4>Templates</h4>' +
-      '<a href="' + base + 'index.html">Weekly Planner</a>' +
-      '<a href="' + base + 'undated-weekly-planner.html">Undated Weekly Planner</a>' +
-      '<a href="' + base + 'vertical-weekly-planner.html">Vertical Weekly Planner</a>' +
-      '<a href="' + base + '7-day-weekly-planner-pdf.html">7 Day Planner PDF</a>' +
-      '<a href="' + base + 'cute-weekly-planner-template.html">Cute Weekly Planner</a>' +
-      '<a href="' + base + 'weekly-habit-tracker-printable.html">Habit Tracker</a></div>' +
+      '<a href="' + base + './">Weekly Planner</a>' +
+      '<a href="' + base + 'undated-weekly-planner">Undated Weekly Planner</a>' +
+      '<a href="' + base + 'vertical-weekly-planner">Vertical Weekly Planner</a>' +
+      '<a href="' + base + '7-day-weekly-planner-pdf">7 Day Planner PDF</a>' +
+      '<a href="' + base + 'cute-weekly-planner-template">Cute Weekly Planner</a>' +
+      '<a href="' + base + 'weekly-habit-tracker-printable">Habit Tracker</a></div>' +
       '<div class="foot-col"><h4>Site</h4>' +
-      '<a href="' + base + 'blog/index.html">Blog</a>' +
-      '<a href="' + base + 'about.html">About</a>' +
-      '<a href="' + base + 'contact.html">Contact</a>' +
-      '<a href="' + base + 'privacy.html">Privacy Policy</a></div>' +
+      '<a href="' + base + 'blog/">Blog</a>' +
+      '<a href="' + base + 'about">About</a>' +
+      '<a href="' + base + 'contact">Contact</a>' +
+      '<a href="' + base + 'privacy">Privacy Policy</a></div>' +
       '</div>' +
       '<div class="foot-bottom"><span>© ' + year + ' PrintWeekly. All rights reserved.</span>' +
       '<span>Made for people who love paper.</span></div>' +
