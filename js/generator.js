@@ -344,8 +344,6 @@
     var dims = PAPERS[state.paper][state.orientation];
     currentDims = dims;
     pageStyle.textContent = '@page { size: ' + dims.css + '; margin: 0; }';
-    /* 打印时用物理毫米精确匹配纸张，避免像素到物理的 DPI 偏差 */
-    pageStyle.textContent += '@media print { #sheet { width: ' + dims.mm.w + ' !important; height: ' + dims.mm.h + ' !important; } }';
     sheet.className = 'sheet' + (state.style === 'cute' ? ' cute' : '') + (state.orientation === 'landscape' ? ' sheet-ls' : '');
     sheet.style.setProperty('--accent', state.accent);
     sheet.style.width = dims.w + 'px';

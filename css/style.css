@@ -172,20 +172,35 @@ a:hover { text-decoration: underline; }
 
 /* ---------------- 打印 ---------------- */
 @media print {
-  body { background: #fff; margin: 0; padding: 0; }
-  body * { visibility: hidden !important; }
-  #sheet, #sheet * { visibility: visible !important; }
-  #sheet {
-    position: fixed !important;
-    left: 0 !important;
-    top: 0 !important;
-    transform: none !important;
+  html, body {
     margin: 0 !important;
     padding: 0 !important;
+    height: auto !important;
+    background: #fff !important;
+  }
+  /* 隐藏所有顶层元素，只留 #generator */
+  body > *:not(#generator) { display: none !important; }
+  /* 隐藏 generator 内部的控制面板和预览提示 */
+  #generator > .gen-panel,
+  #generator > .gen-preview > .gen-notice { display: none !important; }
+  /* 让 sheet-wrap 占满可用空间，不限制高度 */
+  #generator,
+  #generator > .gen-preview,
+  #generator > .gen-preview > .sheet-wrap {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    width: auto !important;
+  }
+  #sheet {
+    position: relative !important;
+    transform: none !important;
+    margin: 0 !important;
     box-shadow: none !important;
     border-radius: 0 !important;
-    box-sizing: border-box !important;
-    page-break-inside: avoid;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 }
 
