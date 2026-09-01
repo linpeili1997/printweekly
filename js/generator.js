@@ -343,7 +343,28 @@
   function render() {
     var dims = PAPERS[state.paper][state.orientation];
     currentDims = dims;
-    pageStyle.textContent = '@page { size: ' + dims.css + '; margin: 0; }';
+    /* 同时注入 @page + @media print，用物理毫米精确锁定单页 */
+    pageStyle.textContent =
+      '@page { size: ' + dims.css + '; margin: 0; }' +
+      '@media print {' +
+      '  body * { visibility: hidden !important; }' +
+      '  #sheet, #sheet * { visibility: visible !important; }' +
+      '  #sheet {' +
+      '    position: fixed !important;' +
+      '    left: 0 !important;' +
+      '    top: 0 !important;' +
+      '    width: ' + dims.mm.w + ' !important;' +
+      '    height: ' + dims.mm.h + ' !important;' +
+      '    margin: 0 !important;' +
+      '    padding: 0 !important;' +
+      '    transform: none !important;' +
+      '    box-shadow: none !important;' +
+      '    border-radius: 0 !important;' +
+      '    background: #fff !important;' +
+      '    page-break-inside: avoid !important;' +
+      '    break-inside: avoid !important;' +
+      '  }' +
+      '}';
     sheet.className = 'sheet' + (state.style === 'cute' ? ' cute' : '') + (state.orientation === 'landscape' ? ' sheet-ls' : '');
     sheet.style.setProperty('--accent', state.accent);
     sheet.style.width = dims.w + 'px';

@@ -171,33 +171,7 @@ a:hover { text-decoration: underline; }
 .hgrid .hline { border-right: 1.5px solid #cbd5e1; }
 
 /* ---------------- 打印 ---------------- */
-@media print {
-  html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    background: #fff !important;
-  }
-  /* 隐藏所有元素 */
-  body * {
-    visibility: hidden !important;
-  }
-  /* 但 #sheet 及其所有后代可见 */
-  #sheet, #sheet * {
-    visibility: visible !important;
-  }
-  #sheet {
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    transform: none !important;
-    margin: 0 !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    background: #fff !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-  }
-}
+/* 打印规则由 generator.js 动态注入（包含 @page + @media print），此处留空 */
 
 /* ---------------- 内容区 ---------------- */
 .section { padding: 44px 0; }
