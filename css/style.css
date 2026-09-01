@@ -176,11 +176,15 @@ a:hover { text-decoration: underline; }
   body * { visibility: hidden !important; }
   #sheet, #sheet * { visibility: visible !important; }
   #sheet {
-    position: static !important;
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
     transform: none !important;
     margin: 0 !important;
+    padding: 0 !important;
     box-shadow: none !important;
     border-radius: 0 !important;
+    box-sizing: border-box !important;
     page-break-inside: avoid;
   }
 }

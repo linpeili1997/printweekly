@@ -28,15 +28,15 @@
   var INIT_MON = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
   var INIT_SUN = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
-  /* 96dpi 下的纸张像素尺寸，css 字段用于 @page 规则 */
+  /* 96dpi 下的纸张像素尺寸 + 物理毫米尺寸（用于打印精确匹配） */
   var PAPERS = {
     a4: {
-      portrait: { w: 794, h: 1123, css: 'A4 portrait' },
-      landscape: { w: 1123, h: 794, css: 'A4 landscape' }
+      portrait: { w: 794, h: 1123, css: 'A4 portrait', mm: { w: '210mm', h: '297mm' } },
+      landscape: { w: 1123, h: 794, css: 'A4 landscape', mm: { w: '297mm', h: '210mm' } }
     },
     letter: {
-      portrait: { w: 816, h: 1056, css: 'letter portrait' },
-      landscape: { w: 1056, h: 816, css: 'letter landscape' }
+      portrait: { w: 816, h: 1056, css: 'letter portrait', mm: { w: '215.9mm', h: '279.4mm' } },
+      landscape: { w: 1056, h: 816, css: 'letter landscape', mm: { w: '279.4mm', h: '215.9mm' } }
     }
   };
 
@@ -344,6 +344,8 @@
     var dims = PAPERS[state.paper][state.orientation];
     currentDims = dims;
     pageStyle.textContent = '@page { size: ' + dims.css + '; margin: 0; }';
+    /* 打印时用物理毫米精确匹配纸张，避免像素到物理的 DPI 偏差 */
+    pageStyle.textContent += '@media print { #sheet { width: ' + dims.mm.w + ' !important; height: ' + dims.mm.h + ' !important; } }';
     sheet.className = 'sheet' + (state.style === 'cute' ? ' cute' : '') + (state.orientation === 'landscape' ? ' sheet-ls' : '');
     sheet.style.setProperty('--accent', state.accent);
     sheet.style.width = dims.w + 'px';
