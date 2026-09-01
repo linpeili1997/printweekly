@@ -161,12 +161,19 @@
       var next = sheet.nextSibling;
       document.body.appendChild(sheet);
       window.print();
-      /* 打印对话框关闭后，把 sheet 移回原位 */
-      window.addEventListener('focus', function restore() {
-        if (next) parent.insertBefore(sheet, next);
-        else parent.appendChild(sheet);
-        window.removeEventListener('focus', restore);
-      });
+      /* 打印对话框关闭后，把 sheet 移回原位并重新适配缩放 */
+      function restore() {
+        if (sheet.parentNode !== parent) {
+          if (next && next.parentNode === parent) parent.insertBefore(sheet, next);
+          else parent.appendChild(sheet);
+        }
+        fit();
+      }
+      /* 优先用 afterprint 事件（Chrome/Edge），兜底用 focus + 延迟 */
+      window.addEventListener('afterprint', restore);
+      window.addEventListener('focus', function () {
+        setTimeout(restore, 300);
+      }, { once: true });
     });
     actions.appendChild(btn);
     actions.appendChild(h('p', { class: 'gen-hint', text: 'Tip: choose “Save as PDF” in the print dialog to download a digital copy.' }));
