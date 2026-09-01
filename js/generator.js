@@ -370,6 +370,7 @@
       '    width: ' + dims.mm.w + ' !important;' +
       '    height: ' + dims.mm.h + ' !important;' +
       '    margin: 0 !important;' +
+      '    padding: 0 !important;' +
       '    transform: none !important;' +
       '    box-shadow: none !important;' +
       '    border-radius: 0 !important;' +
