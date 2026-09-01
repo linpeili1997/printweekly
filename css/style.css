@@ -172,14 +172,16 @@ a:hover { text-decoration: underline; }
 
 /* ---------------- 打印 ---------------- */
 @media print {
-  body { background: #fff; }
+  body { background: #fff; margin: 0; padding: 0; }
   body * { visibility: hidden !important; }
   #sheet, #sheet * { visibility: visible !important; }
   #sheet {
-    position: fixed !important; left: 0 !important; top: 0 !important;
-    transform: none !important; margin: 0 !important;
-    box-shadow: none !important; border-radius: 0 !important;
-    width: 100% !important; height: 100vh !important;
+    position: static !important;
+    transform: none !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    page-break-inside: avoid;
   }
 }
 
