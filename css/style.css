@@ -175,30 +175,25 @@ a:hover { text-decoration: underline; }
   html, body {
     margin: 0 !important;
     padding: 0 !important;
-    height: auto !important;
     background: #fff !important;
   }
-  /* 隐藏所有顶层元素，只留 #generator */
-  body > *:not(#generator) { display: none !important; }
-  /* 隐藏 generator 内部的控制面板和预览提示 */
-  #generator > .gen-panel,
-  #generator > .gen-preview > .gen-notice { display: none !important; }
-  /* 让 sheet-wrap 占满可用空间，不限制高度 */
-  #generator,
-  #generator > .gen-preview,
-  #generator > .gen-preview > .sheet-wrap {
-    display: block !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    height: auto !important;
-    width: auto !important;
+  /* 隐藏所有元素 */
+  body * {
+    visibility: hidden !important;
+  }
+  /* 但 #sheet 及其所有后代可见 */
+  #sheet, #sheet * {
+    visibility: visible !important;
   }
   #sheet {
-    position: relative !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
     transform: none !important;
     margin: 0 !important;
     box-shadow: none !important;
     border-radius: 0 !important;
+    background: #fff !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
