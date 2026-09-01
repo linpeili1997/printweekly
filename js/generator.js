@@ -155,7 +155,19 @@
     ]));
     var actions = h('div', { class: 'gen-actions' });
     var btn = h('button', { id: 'btn-print', class: 'btn btn-primary btn-block', type: 'button', text: 'Print / Save as PDF' });
-    btn.addEventListener('click', function () { window.print(); });
+    btn.addEventListener('click', function () {
+      /* 打印前把 sheet 移到 body 直接子级，其他元素全部隐藏，确保只出 1 页 */
+      var parent = sheet.parentNode;
+      var next = sheet.nextSibling;
+      document.body.appendChild(sheet);
+      window.print();
+      /* 打印对话框关闭后，把 sheet 移回原位 */
+      window.addEventListener('focus', function restore() {
+        if (next) parent.insertBefore(sheet, next);
+        else parent.appendChild(sheet);
+        window.removeEventListener('focus', restore);
+      });
+    });
     actions.appendChild(btn);
     actions.appendChild(h('p', { class: 'gen-hint', text: 'Tip: choose “Save as PDF” in the print dialog to download a digital copy.' }));
     panel.appendChild(actions);
@@ -343,20 +355,19 @@
   function render() {
     var dims = PAPERS[state.paper][state.orientation];
     currentDims = dims;
-    /* 同时注入 @page + @media print，用物理毫米精确锁定单页 */
+    /* 简化打印规则：sheet 已被 JS 移到 body 直接子级，用 display:none 隐藏其他所有元素 */
     pageStyle.textContent =
       '@page { size: ' + dims.css + '; margin: 0; }' +
       '@media print {' +
-      '  body * { visibility: hidden !important; }' +
-      '  #sheet, #sheet * { visibility: visible !important; }' +
+      '  html, body { margin: 0; padding: 0; background: #fff; }' +
+      '  body > *:not(#sheet) { display: none !important; }' +
       '  #sheet {' +
-      '    position: fixed !important;' +
-      '    left: 0 !important;' +
-      '    top: 0 !important;' +
+      '    position: relative !important;' +
+      '    left: auto !important;' +
+      '    top: auto !important;' +
       '    width: ' + dims.mm.w + ' !important;' +
       '    height: ' + dims.mm.h + ' !important;' +
       '    margin: 0 !important;' +
-      '    padding: 0 !important;' +
       '    transform: none !important;' +
       '    box-shadow: none !important;' +
       '    border-radius: 0 !important;' +
