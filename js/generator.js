@@ -155,7 +155,22 @@
     ]));
     var actions = h('div', { class: 'gen-actions' });
     var btn = h('button', { id: 'btn-print', class: 'btn btn-primary btn-block', type: 'button', text: 'Print / Save as PDF' });
-    btn.addEventListener('click', function () { window.print(); });
+    btn.addEventListener('click', function () {
+      var parent = sheet.parentNode;
+      var next = sheet.nextSibling;
+      document.body.appendChild(sheet);
+      window.print();
+      function restore() {
+        if (sheet.parentNode !== parent) {
+          if (next && next.parentNode === parent) parent.insertBefore(sheet, next);
+          else parent.appendChild(sheet);
+        }
+        setTimeout(fit, 50);
+      }
+      window.addEventListener('afterprint', restore);
+      window.addEventListener('focus', restore, { once: true });
+      setTimeout(restore, 5000);
+    });
     actions.appendChild(btn);
     actions.appendChild(h('p', { class: 'gen-hint', text: 'Tip: choose “Save as PDF” in the print dialog to download a digital copy.' }));
     panel.appendChild(actions);
@@ -343,17 +358,15 @@
   function render() {
     var dims = PAPERS[state.paper][state.orientation];
     currentDims = dims;
-    /* 纯 CSS 打印规则：position:fixed 让 sheet 脱离文档流不参与分页，物理毫米精确匹配纸张 */
     pageStyle.textContent =
       '@page { size: ' + dims.css + '; margin: 0; }' +
       '@media print {' +
       '  html, body { margin: 0; padding: 0; background: #fff; }' +
-      '  body * { visibility: hidden !important; }' +
-      '  #sheet, #sheet * { visibility: visible !important; }' +
+      '  body > *:not(#sheet) { display: none !important; }' +
       '  #sheet {' +
-      '    position: fixed !important;' +
-      '    left: 0 !important;' +
-      '    top: 0 !important;' +
+      '    position: relative !important;' +
+      '    left: auto !important;' +
+      '    top: auto !important;' +
       '    width: ' + dims.mm.w + ' !important;' +
       '    height: ' + dims.mm.h + ' !important;' +
       '    margin: 0 !important;' +
