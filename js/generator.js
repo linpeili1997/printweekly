@@ -156,6 +156,15 @@
     var actions = h('div', { class: 'gen-actions' });
     var btn = h('button', { id: 'btn-print', class: 'btn btn-primary btn-block', type: 'button', text: 'Print / Save as PDF' });
     btn.addEventListener('click', function () {
+      // GA4 conversion tracking — print/save action
+      if (typeof gtag === 'function') {
+        gtag('event', 'print_planner', {
+          'event_category': 'engagement',
+          'event_label': window.location.pathname,
+          'template_style': (state.style || 'minimal') + '/' + (state.layout || 'columns'),
+          'paper_size': state.paper || 'A4'
+        });
+      }
       var parent = sheet.parentNode;
       var next = sheet.nextSibling;
       document.body.appendChild(sheet);
