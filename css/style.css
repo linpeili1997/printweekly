@@ -62,6 +62,7 @@ a:hover { text-decoration: underline; }
 .crumbs a:hover { color: var(--accent); }
 .badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
 .badge { font-size: 13px; font-weight: 600; color: var(--accent-dark); background: var(--accent-soft); border-radius: 999px; padding: 5px 13px; }
+.badge-hot { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; }
 
 /* ---------------- 按钮 ---------------- */
 .btn {
@@ -192,6 +193,8 @@ a:hover { text-decoration: underline; }
 .tcard h3 { font-size: 17px; color: var(--ink); }
 .tcard p { font-size: 13.5px; color: var(--muted); flex: 1; }
 .tcard .go { font-size: 13.5px; font-weight: 700; color: var(--accent); }
+.tcard-featured { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 4px 18px color-mix(in srgb, var(--accent) 15%, transparent); position: relative; }
+.tcard-badge { position: absolute; top: -10px; right: 16px; background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 999px; letter-spacing: .04em; box-shadow: 0 2px 6px rgba(217, 119, 6, .3); }
 
 .prose { max-width: 780px; }
 .prose h2 { font-size: 22px; font-weight: 800; margin: 34px 0 12px; letter-spacing: -.01em; }
